@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTimerContext } from "../store/TimerContextProvider";
 import formatTimer from "../utils/formatTimer";
 import Circle from "./Circle";
@@ -13,26 +13,29 @@ const remainingPercentage = (
 export default function Timer() {
   const { currentTimerIndex, timers, isRunning, toggleTimer, updateTimer } =
     useTimerContext();
-  const totalDuration = timers[currentTimerIndex]?.duration || 0;
-  const [duration, setDuration] = useState(totalDuration);
+
+  const totalDuration = timers[currentTimerIndex]?.totalDuration || 0;
+  const [duration, setDuration] = useState(timers[currentTimerIndex].duration);
+
+  const durationRef = useRef(duration);
+  durationRef.current = duration;
 
   useEffect(() => {
-    setDuration(totalDuration);
-  }, [currentTimerIndex, totalDuration]);
+    setDuration(timers[currentTimerIndex].duration);
+  }, [currentTimerIndex, timers]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (isRunning && duration > 0) {
-        setDuration((prev) => {
-          const newDuration = Math.max(prev - 1000, 0);
-          updateTimer(currentTimerIndex, newDuration);
-          return newDuration;
-        });
+      if (isRunning && durationRef.current > 0) {
+        const newDuration = Math.max(durationRef.current - 1000, 0);
+        setDuration(newDuration);
+        durationRef.current = newDuration;
+        updateTimer(currentTimerIndex, newDuration);
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [isRunning, currentTimerIndex, duration, updateTimer]);
+  }, [isRunning, currentTimerIndex, updateTimer]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -49,7 +52,7 @@ export default function Timer() {
   }, [toggleTimer]);
 
   return (
-    <div className="h-screen grid place-content-center">
+    <div>
       <div className="timer">
         <h1 className="text-c-100">{formatTimer(duration)}</h1>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
