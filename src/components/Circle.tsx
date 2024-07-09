@@ -1,7 +1,10 @@
+import clsx from "clsx";
+
 type CircleProps = {
   size: number;
   stroke: number;
   percentage: number;
+  isRunning: boolean;
   color: string;
 };
 
@@ -9,13 +12,12 @@ export default function Circle({
   size,
   stroke,
   percentage,
+  isRunning,
   color,
 }: CircleProps) {
   const radius = size / 2 - stroke / 2;
   const circ = 2 * Math.PI * radius;
   const strokePct = ((100 - percentage) * circ) / 100;
-
-  console.log(strokePct);
 
   return (
     <div className="-rotate-90">
@@ -30,7 +32,9 @@ export default function Circle({
           strokeDasharray={circ}
           strokeDashoffset={percentage === 0 ? 0 : strokePct}
           strokeLinecap="round"
-          className="transition-all ease-linear"
+          className={clsx("transition-all ease-linear", {
+            "animate-pulse": isRunning,
+          })}
         />
       </svg>
     </div>

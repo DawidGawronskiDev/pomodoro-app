@@ -49,6 +49,7 @@ export default function Timer() {
             size={340}
             stroke={10}
             percentage={remainingPercentage(duration, totalDuration)}
+            isRunning={isRunning}
             color="var(--c-100)"
           />
         </div>
