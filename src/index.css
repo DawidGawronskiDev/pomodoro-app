@@ -23,7 +23,7 @@
   }
 
   h1 {
-    @apply font-bold text-[120px] leading-[120px] -tracking-[5px];
+    @apply font-bold text-[100px] leading-[120px];
   }
 
   h2 {
@@ -69,9 +69,7 @@
     aspect-ratio: 1 / 1;
     border-radius: 50%;
 
-    box-shadow:
-      -50px -50px 100px var(--c-500),
-      50px 50px 100px var(--c-800);
+    box-shadow: -50px -50px 100px #272c5a, 50px 50px 100px #121530;
   }
 
   .timer::after {
@@ -87,6 +85,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    background: linear-gradient(var(--c-800), var(--c-500));
+    background: linear-gradient(120deg, #0e112a, #2e325a);
   }
 }
