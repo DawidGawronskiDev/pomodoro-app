@@ -1,22 +1,36 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 
-type Timer = {
+export type Timer = {
   name: string;
+  totalDuration: number;
   duration: number;
 };
+
+export type Status = "start" | "pause" | "restart";
 
 type InitialState = {
   currentTimerIndex: number;
   timers: Timer[];
+  status: Status;
   isRunning: boolean;
 };
 
 type TimerContextType = {
   currentTimerIndex: number;
   timers: Timer[];
+  status: Status;
   isRunning: boolean;
+  stopTimer: () => void;
   toggleTimer: () => void;
   updateTimer: (timerIndex: number, duration: number) => void;
+  updateStatus: (status: Status) => void;
+  handleCurrentTimerIndex: (index: number) => void;
 };
 
 type TimerContextProviderProps = {
@@ -28,26 +42,34 @@ const initialState: InitialState = {
   timers: [
     {
       name: "Pomodoro",
+      totalDuration: 1500000,
       duration: 1500000,
     },
     {
       name: "Short Break",
-      duration: 300000,
+      totalDuration: 10000,
+      duration: 10000,
     },
     {
       name: "Long Break",
+      totalDuration: 900000,
       duration: 900000,
     },
   ],
+  status: "start",
   isRunning: false,
 };
 
 const TimerContext = createContext<TimerContextType>({
   currentTimerIndex: 0,
   timers: [],
+  status: "start",
   isRunning: false,
+  stopTimer: () => {},
   toggleTimer: () => {},
   updateTimer: () => {},
+  updateStatus: () => {},
+  handleCurrentTimerIndex: () => {},
 });
 
 export default function TimerContextProvider({
@@ -57,7 +79,12 @@ export default function TimerContextProvider({
     initialState.currentTimerIndex
   );
   const [timers, setTimers] = useState<Timer[]>(initialState.timers);
+  const [status, setStatus] = useState<Status>("start");
   const [isRunning, setIsRunning] = useState<boolean>(false);
+
+  const stopTimer = () => {
+    setIsRunning(false);
+  };
 
   const toggleTimer = () => {
     setIsRunning((prev) => !prev);
@@ -71,12 +98,31 @@ export default function TimerContextProvider({
     setTimers(updatedTimers);
   };
 
+  const updateStatus = (status: Status) => {
+    setStatus(status);
+  };
+
+  const handleCurrentTimerIndex = (index: number) => {
+    setCurrentTimerIndex(index);
+    stopTimer();
+  };
+
+  useEffect(() => {
+    if (isRunning && timers[currentTimerIndex].duration <= 0) {
+      setIsRunning(false);
+    }
+  }, [currentTimerIndex, isRunning, timers]);
+
   const contextValue = {
     currentTimerIndex,
     timers,
+    status,
     isRunning,
+    stopTimer,
     toggleTimer,
     updateTimer,
+    updateStatus,
+    handleCurrentTimerIndex,
   };
 
   return (
