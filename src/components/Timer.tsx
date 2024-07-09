@@ -3,6 +3,7 @@ import { useTimerContext } from "../store/TimerContextProvider";
 import formatTimer from "../utils/formatTimer";
 import Circle from "./Circle";
 import useKeyHandler from "../hooks/useKeyHandler";
+import StatusButton from "./StatusButton";
 
 const remainingPercentage = (
   remainingTime: number,
@@ -43,7 +44,10 @@ export default function Timer() {
   return (
     <div>
       <div className="timer">
-        <h1 className="text-c-100">{formatTimer(duration)}</h1>
+        <div className="text-center text-c-700">
+          <h1>{formatTimer(duration)}</h1>
+          <StatusButton isRunning={isRunning} duration={duration} />
+        </div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <Circle
             size={340}
