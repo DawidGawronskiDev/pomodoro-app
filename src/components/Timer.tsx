@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTimerContext } from "../store/TimerContextProvider";
 import formatTimer from "../utils/formatTimer";
 import Circle from "./Circle";
+import useKeyHandler from "../hooks/useKeyHandler";
 
 const remainingPercentage = (
   remainingTime: number,
@@ -37,19 +38,7 @@ export default function Timer() {
     return () => clearInterval(interval);
   }, [isRunning, currentTimerIndex, updateTimer]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.code === "Space") {
-        toggleTimer();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [toggleTimer]);
+  useKeyHandler("Space", toggleTimer);
 
   return (
     <div>
