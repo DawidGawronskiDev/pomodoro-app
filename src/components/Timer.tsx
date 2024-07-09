@@ -1,20 +1,10 @@
 import { useEffect, useState } from "react";
 import { useTimerContext } from "../store/TimerContextProvider";
+import formatTimer from "../utils/formatTimer";
 
 export default function Timer() {
   const { currentTimerIndex, timers } = useTimerContext();
   const [duration, setDuration] = useState(timers[currentTimerIndex].duration);
-
-  const formatTimer = (ms: number) => {
-    const seconds = Math.floor((ms / 1000) % 60);
-    const minutes = Math.floor((ms / 1000 / 60) % 60);
-
-    const addZero = (n: number) => {
-      return n.toString().length === 1 ? 0 + n.toString() : n;
-    };
-
-    return `${addZero(minutes)}:${addZero(seconds)}`;
-  };
 
   useEffect(() => {
     const interval = setInterval(() => {
