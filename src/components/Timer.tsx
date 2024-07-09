@@ -14,5 +14,11 @@ export default function Timer() {
     return () => clearInterval(interval);
   }, []);
 
-  return <div>{formatTimer(duration)}</div>;
+  return (
+    <div className="h-screen grid place-content-center">
+      <div className="timer">
+        <h1 className="text-c-100">{formatTimer(duration)}</h1>
+      </div>
+    </div>
+  );
 }

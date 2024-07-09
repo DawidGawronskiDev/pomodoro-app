@@ -6,6 +6,17 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --c-100: #f87070;
+  --c-200: #70f3f8;
+  --c-300: #d881f8;
+  --c-400: #d7e0ff;
+  --c-500: #1e213f;
+  --c-600: #ffffff;
+  --c-700: #eff1fa;
+  --c-800: #161932;
+}
+
 @layer base {
   html {
     @apply bg-c-800;
@@ -33,5 +44,49 @@
 
   .body.two {
     @apply font-bold text-[12px] leading-[14px];
+  }
+
+  .timer {
+    position: relative;
+
+    width: 366px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+
+    background-color: var(--c-800);
+
+    display: grid;
+    place-content: center;
+  }
+
+  .timer::before {
+    z-index: -2;
+    position: absolute;
+
+    content: "";
+
+    width: 366px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+
+    box-shadow:
+      -50px -50px 100px var(--c-500),
+      50px 50px 100px var(--c-800);
+  }
+
+  .timer::after {
+    z-index: -1;
+    position: absolute;
+
+    content: "";
+    width: 410px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: linear-gradient(var(--c-800), var(--c-500));
   }
 }
