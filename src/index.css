@@ -7,6 +7,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply bg-c-800;
+  }
+
   h1 {
     @apply font-bold text-[120px] leading-[120px];
   }
