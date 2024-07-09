@@ -19,7 +19,7 @@
 
 @layer base {
   html {
-    @apply bg-c-800;
+    @apply bg-c-500;
   }
 
   h1 {
