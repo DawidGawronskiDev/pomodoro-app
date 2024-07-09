@@ -12,7 +12,7 @@
   }
 
   h1 {
-    @apply font-bold text-[120px] leading-[120px];
+    @apply font-bold text-[120px] leading-[120px] -tracking-[5px];
   }
 
   h2 {
