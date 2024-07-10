@@ -31,7 +31,7 @@
   }
 
   h3 {
-    @apply font-bold text-base leading-[19px] tracking-[15px] uppercase;
+    @apply font-bold text-base leading-[19px] tracking-[5px] uppercase;
   }
 
   h4 {
@@ -88,5 +88,16 @@
     transform: translate(-50%, -50%);
 
     background: linear-gradient(120deg, #0e112a, #2e325a);
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
   }
 }

@@ -1,5 +1,6 @@
 import Logo from "./components/Logo";
 import Navigation from "./components/Navigation";
+import Settings from "./components/Settings";
 import Timer from "./components/Timer";
 import TimerContextProvider from "./store/TimerContextProvider";
 
@@ -11,6 +12,7 @@ export default function App() {
         <Navigation />
         <Timer />
       </main>
+      <Settings />
     </TimerContextProvider>
   );
 }

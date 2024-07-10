@@ -5,6 +5,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import timers from "../lib/timers";
 
 export type Timer = {
   name: string;
@@ -40,23 +41,7 @@ type TimerContextProviderProps = {
 
 const initialState: InitialState = {
   currentTimerIndex: 0,
-  timers: [
-    {
-      name: "Pomodoro",
-      totalDuration: 1500000,
-      duration: 1500000,
-    },
-    {
-      name: "Short Break",
-      totalDuration: 10000,
-      duration: 10000,
-    },
-    {
-      name: "Long Break",
-      totalDuration: 900000,
-      duration: 900000,
-    },
-  ],
+  timers: timers,
   status: "start",
   isRunning: false,
 };
