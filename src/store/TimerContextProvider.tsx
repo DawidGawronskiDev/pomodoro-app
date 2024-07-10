@@ -30,6 +30,7 @@ type TimerContextType = {
   toggleTimer: () => void;
   updateTimer: (timerIndex: number, duration: number) => void;
   updateStatus: (status: Status) => void;
+  handleStatus: () => void;
   handleCurrentTimerIndex: (index: number) => void;
 };
 
@@ -69,6 +70,7 @@ const TimerContext = createContext<TimerContextType>({
   toggleTimer: () => {},
   updateTimer: () => {},
   updateStatus: () => {},
+  handleStatus: () => {},
   handleCurrentTimerIndex: () => {},
 });
 
@@ -107,11 +109,40 @@ export default function TimerContextProvider({
     stopTimer();
   };
 
+  const handleStatus = () => {
+    switch (status) {
+      case "restart": {
+        updateTimer(currentTimerIndex, timers[currentTimerIndex].totalDuration);
+        setIsRunning(true);
+        break;
+      }
+      case "pause": {
+        setIsRunning(false);
+        break;
+      }
+      case "start": {
+        setIsRunning(true);
+      }
+    }
+  };
+
   useEffect(() => {
     if (isRunning && timers[currentTimerIndex].duration <= 0) {
       setIsRunning(false);
     }
   }, [currentTimerIndex, isRunning, timers]);
+
+  useEffect(() => {
+    if (isRunning) {
+      updateStatus("pause");
+    }
+    if (!isRunning) {
+      updateStatus("start");
+    }
+    if (!timers[currentTimerIndex].duration) {
+      updateStatus("restart");
+    }
+  }, [currentTimerIndex, timers, isRunning, updateStatus]);
 
   const contextValue = {
     currentTimerIndex,
@@ -122,6 +153,7 @@ export default function TimerContextProvider({
     toggleTimer,
     updateTimer,
     updateStatus,
+    handleStatus,
     handleCurrentTimerIndex,
   };
 

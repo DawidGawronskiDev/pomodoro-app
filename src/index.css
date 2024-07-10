@@ -69,7 +69,9 @@
     aspect-ratio: 1 / 1;
     border-radius: 50%;
 
-    box-shadow: -50px -50px 100px #272c5a, 50px 50px 100px #121530;
+    box-shadow:
+      -50px -50px 100px #272c5a,
+      50px 50px 100px #121530;
   }
 
   .timer::after {

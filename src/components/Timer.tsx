@@ -44,9 +44,9 @@ export default function Timer() {
   return (
     <div>
       <div className="timer">
-        <div className="text-center text-c-700">
+        <div className="text-center text-c-700 z-10">
           <h1>{formatTimer(duration)}</h1>
-          <StatusButton isRunning={isRunning} duration={duration} />
+          <StatusButton />
         </div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <Circle
