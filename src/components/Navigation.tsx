@@ -1,8 +1,9 @@
-import { useTimerContext } from "../store/TimerContextProvider";
+import { useSelector } from "react-redux";
 import Link from "./Link";
+import { RootState } from "../store/store";
 
 export default function Navigation() {
-  const { timers } = useTimerContext();
+  const { timers } = useSelector((state: RootState) => state.timer);
 
   return (
     <nav>

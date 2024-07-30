@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import { useTimerContext } from "../store/TimerContextProvider";
+import { useSelector } from "react-redux";
 import formatTimer from "../utils/formatTimer";
 import Circle from "./Circle";
-import useKeyHandler from "../hooks/useKeyHandler";
 import StatusButton from "./StatusButton";
+import { AppDispatch, RootState } from "../store/store";
+import { useEffect } from "react";
+import { toogleIsRunning, updateCurrentTimer } from "../store/timerSlice";
+import { useDispatch } from "react-redux";
 
 const remainingPercentage = (
   remainingTime: number,
@@ -13,47 +15,55 @@ const remainingPercentage = (
 };
 
 export default function Timer() {
-  const { currentTimerIndex, timers, isRunning, toggleTimer, updateTimer } =
-    useTimerContext();
-
-  const totalDuration = timers[currentTimerIndex]?.totalDuration || 0;
-  const [duration, setDuration] = useState(timers[currentTimerIndex].duration);
-
-  const durationRef = useRef(duration);
-  durationRef.current = duration;
+  const { timers, currentTimerIndex, isRunning } = useSelector(
+    (state: RootState) => state.timer
+  );
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    setDuration(timers[currentTimerIndex].duration);
-  }, [currentTimerIndex, timers]);
+    if (!isRunning) {
+      return;
+    }
 
-  useEffect(() => {
     const interval = setInterval(() => {
-      if (isRunning && durationRef.current > 0) {
-        const newDuration = Math.max(durationRef.current - 1000, 0);
-        setDuration(newDuration);
-        durationRef.current = newDuration;
-        updateTimer(currentTimerIndex, newDuration);
-      }
+      dispatch(updateCurrentTimer());
     }, 1000);
 
-    return () => clearInterval(interval);
-  }, [isRunning, currentTimerIndex, updateTimer]);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [timers, currentTimerIndex, isRunning, dispatch]);
 
-  useKeyHandler("Space", toggleTimer);
+  useEffect(() => {
+    const eventListener = (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        dispatch(toogleIsRunning());
+      }
+    };
+
+    document.addEventListener("keydown", eventListener);
+
+    return () => {
+      document.removeEventListener("keydown", eventListener);
+    };
+  }, [dispatch]);
 
   return (
     <div>
       <div className="timer">
         <div className="text-center text-c-700 z-10">
-          <h1>{formatTimer(duration)}</h1>
+          <h1>{formatTimer(timers[currentTimerIndex].duration)}</h1>
           <StatusButton />
         </div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <Circle
             size={340}
             stroke={10}
-            percentage={remainingPercentage(duration, totalDuration)}
-            isRunning={isRunning}
+            percentage={remainingPercentage(
+              timers[currentTimerIndex].duration,
+              timers[currentTimerIndex].totalDuration
+            )}
+            isRunning={false}
             color="var(--c-100)"
           />
         </div>

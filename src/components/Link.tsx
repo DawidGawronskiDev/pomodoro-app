@@ -1,5 +1,9 @@
 import clsx from "clsx";
-import { useTimerContext, type Timer } from "../store/TimerContextProvider";
+import { RootState } from "../store/store";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { updateCurrentIndex } from "../store/timerSlice";
+import { type Timer } from "../types/timer";
 
 type LinkProps = {
   timer: Timer;
@@ -7,12 +11,13 @@ type LinkProps = {
 };
 
 export default function Link({ timer, index }: LinkProps) {
-  const { currentTimerIndex, handleCurrentTimerIndex } = useTimerContext();
+  const { currentTimerIndex } = useSelector((state: RootState) => state.timer);
+  const dispach = useDispatch();
 
   return (
     <li>
       <button
-        onClick={() => handleCurrentTimerIndex(index)}
+        onClick={() => dispach(updateCurrentIndex(index))}
         className={clsx("px-6 py-4 rounded-full", {
           "bg-c-100": currentTimerIndex === index,
           "text-c-400 hover:text-c-700": currentTimerIndex !== index,

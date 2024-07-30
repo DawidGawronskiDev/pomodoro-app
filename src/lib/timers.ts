@@ -1,4 +1,4 @@
-import { type Timer } from "../store/TimerContextProvider";
+import { type Timer } from "../types/timer";
 
 const timers: Timer[] = [
   {
@@ -8,8 +8,8 @@ const timers: Timer[] = [
   },
   {
     name: "Short Break",
-    totalDuration: 60000,
-    duration: 60000,
+    totalDuration: 10000,
+    duration: 10000,
   },
   {
     name: "Long Break",
