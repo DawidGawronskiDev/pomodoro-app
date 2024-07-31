@@ -15,6 +15,14 @@
   --c-600: #ffffff;
   --c-700: #eff1fa;
   --c-800: #161932;
+
+  --c-main: var(--c-100);
+
+  --f-kumbh: "Kumbh Sans", sans-serif;
+  --f-roboto: "Roboto Slab", serif;
+  --f-space: "Space Mono", monospace;
+
+  --f-main: var(--f-kumbh);
 }
 
 @layer base {

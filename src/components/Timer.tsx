@@ -18,6 +18,7 @@ export default function Timer() {
   const { timers, currentTimerIndex, isRunning } = useSelector(
     (state: RootState) => state.timer
   );
+  const { color } = useSelector((state: RootState) => state.appearance);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -64,7 +65,6 @@ export default function Timer() {
               timers[currentTimerIndex].totalDuration
             )}
             isRunning={false}
-            color="var(--c-100)"
           />
         </div>
       </div>

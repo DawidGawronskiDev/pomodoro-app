@@ -8,12 +8,15 @@ import { store } from "./store/store";
 export default function App() {
   return (
     <Provider store={store}>
-      <main className="h-screen grid place-content-center place-items-center gap-16 font-kumbh">
+      <main
+        style={{ fontFamily: "var(--f-main)" }}
+        className="h-screen grid place-content-center place-items-center gap-16"
+      >
         <Logo />
         <Navigation />
         <Timer />
       </main>
-      {/* <Settings /> */}
+      <Settings />
     </Provider>
   );
 }

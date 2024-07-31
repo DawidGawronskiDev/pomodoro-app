@@ -18,8 +18,11 @@ export default function Link({ timer, index }: LinkProps) {
     <li>
       <button
         onClick={() => dispach(updateCurrentIndex(index))}
-        className={clsx("px-6 py-4 rounded-full", {
-          "bg-c-100": currentTimerIndex === index,
+        style={{
+          backgroundColor:
+            currentTimerIndex === index ? "var(--c-main)" : undefined,
+        }}
+        className={clsx("px-6 py-4 rounded-full transition-colors", {
           "text-c-400 hover:text-c-700": currentTimerIndex !== index,
         })}
       >

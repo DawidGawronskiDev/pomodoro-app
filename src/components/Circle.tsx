@@ -5,7 +5,6 @@ type CircleProps = {
   stroke: number;
   percentage: number;
   isRunning: boolean;
-  color: string;
 };
 
 export default function Circle({
@@ -13,7 +12,6 @@ export default function Circle({
   stroke,
   percentage,
   isRunning,
-  color,
 }: CircleProps) {
   const radius = size / 2 - stroke / 2;
   const circ = 2 * Math.PI * radius;
@@ -27,12 +25,11 @@ export default function Circle({
           cx={size / 2}
           cy={size / 2}
           fill="transparent"
-          stroke={color}
           strokeWidth={stroke}
           strokeDasharray={circ}
           strokeDashoffset={percentage === 0 ? 0 : strokePct}
           strokeLinecap="round"
-          className={clsx("transition-all ease-linear", {
+          className={clsx("transition-all ease-linear stroke-main", {
             "animate-pulse": isRunning,
           })}
         />

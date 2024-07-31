@@ -12,11 +12,13 @@ export default {
         "c-600": "#FFFFFF",
         "c-700": "#EFF1FA",
         "c-800": "#161932",
+        main: "var(--c-main)",
       },
       fontFamily: {
         kumbh: '"Kumbh Sans", sans-serif',
         roboto: '"Roboto Slab", serif',
         space: '"Space Mono", monospace',
+        main: "var(--f-main)",
       },
     },
   },
