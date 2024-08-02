@@ -15,8 +15,8 @@ export default function App() {
         <Logo />
         <Navigation />
         <Timer />
+        <Settings />
       </main>
-      <Settings />
     </Provider>
   );
 }

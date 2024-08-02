@@ -7,12 +7,6 @@ const Font = ({ font }: FontProps) => {
     document.documentElement.style.setProperty("--f-main", `var(${font})`);
   };
 
-  console.log(
-    getComputedStyle(document.documentElement)
-      .getPropertyValue(`var(${font})`)
-      .trim()
-  );
-
   return (
     <li>
       <button

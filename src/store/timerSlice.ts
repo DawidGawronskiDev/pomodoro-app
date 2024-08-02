@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import timers from "../lib/timers";
+import formatTimer from "../utils/formatTimer";
 
 const initialState = {
   initialTimers: timers,
@@ -13,8 +14,12 @@ const timerSlice = createSlice({
   name: "timers",
   initialState,
   reducers: {
-    updateCurrentTimer: (state) => {
+    updateCurrentTimer: (state, action: PayloadAction<number>) => {
       const currentIndex = state.currentTimerIndex;
+
+      document.title = `${state.timers[currentIndex].name} ${formatTimer(
+        state.timers[currentIndex].duration
+      )}`;
 
       if (state.timers[currentIndex].duration <= 0) {
         state.timers[currentIndex].duration = 0;
@@ -23,7 +28,7 @@ const timerSlice = createSlice({
         return;
       }
 
-      state.timers[currentIndex].duration -= 1000;
+      state.timers[currentIndex].duration -= action.payload;
     },
     updateCurrentIndex: (state, action: PayloadAction<number>) => {
       state.currentTimerIndex = action.payload;

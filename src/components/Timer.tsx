@@ -18,7 +18,6 @@ export default function Timer() {
   const { timers, currentTimerIndex, isRunning } = useSelector(
     (state: RootState) => state.timer
   );
-  const { color } = useSelector((state: RootState) => state.appearance);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -27,8 +26,8 @@ export default function Timer() {
     }
 
     const interval = setInterval(() => {
-      dispatch(updateCurrentTimer());
-    }, 1000);
+      dispatch(updateCurrentTimer(20));
+    }, 20);
 
     return () => {
       clearInterval(interval);
